@@ -9,9 +9,9 @@ public class App {
         
         Model model = Model.getInstance();
         int opt;
-        
+        //this is the menu
         do {
-            System.out.println("1. Create new Patient");
+            System.out.println("1. Create new Patients");
             System.out.println("2. Delete existing Patient");
             System.out.println("3. Edit a Patient");
             System.out.println("4. View all Patients");
@@ -52,8 +52,7 @@ public class App {
         
         while (opt!=5);
     }
-
-    
+    //create patient method
     private static void createPatient(Scanner keyboard, Model model) {
        Patient p = readPatient(keyboard);
         model.addPatient(p);
