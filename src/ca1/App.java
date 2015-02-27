@@ -90,15 +90,16 @@ public class App {
         }
 
         else {
-            System.out.printf("%5s %20s %20s %15s %20s \n", "ID", "First Name", "Last Name", "Address", "Phone" );
+            System.out.printf("%5s %20s %20s %15s %20s %5s\n", "ID", "First Name", "Last Name", "Address", "Phone", "Doctor ID" );
             for(Patient pr : patients) {
-                System.out.printf("%5d %20s %20s %15s %20s\n",
+                System.out.printf("%5d %20s %20s %15s %20s %5d\n",
                         pr.getPatientID(),
                         pr.getFName(),
                         pr.getLName(),
                         pr.getLName(),
                         pr.getAddress(),
                         pr.getPhone());
+                        pr.getDoctorID();
             }
         }
         System.out.println();
@@ -116,7 +117,10 @@ public class App {
         address = getString(keyb, "Enter address: ");
         phone = getString(keyb, "Enter phone number: ");
         
-        Patient p = new Patient(patientId, fName, lName, address, phone);
+        line = getString(keyb, "Enter Doctor ID: ");
+        doctorID = Integer.parseInt(line);
+        
+        Patient p = new Patient(patientId, fName, lName, address, phone, doctorID);
         
         return p;
     }
@@ -155,6 +159,9 @@ public class App {
         address = getString(keyboard, "Enter Address [" + p.getAddress() + "]: ");
         phone = getString(keyboard, "Enter Phone number [" + p.getPhone() + "]: ");
         
+        line = getString(keyb, "Enter Doctor ID [" + p.getDoctorID() + "]: ");
+        doctorID = Integer.parseInt(line);
+        
         if(fName.length() !=0) {
             p.setFName(fName);
         }
@@ -169,6 +176,10 @@ public class App {
         
         if(phone.length() !=0) {
             p.setPhone(phone);
+        }
+        
+        if(doctorID.length() !=0) {
+            p.setDoctorID(doctorID);
         }
     }
     

@@ -18,6 +18,7 @@ public class PatientTableGateway {
     private static final String COLUMN_LNAME = "LName";
     private static final String COLUMN_ADDRESS = "Address";
     private static final String COLUMN_PHONE = "Phone";
+    private static final String COLUMN_DOCTORID = "DoctorID"
     //private String patientId;
     
     public PatientTableGateway(Connection connection) {
@@ -36,14 +37,16 @@ public class PatientTableGateway {
                 COLUMN_FNAME + "," +
                 COLUMN_LNAME + "," +
                 COLUMN_ADDRESS + "," +
-                COLUMN_PHONE + 
-                ") VALUES (?, ?, ?, ?)";
+                COLUMN_PHONE + "," +
+                COLUMN_DOCTORID +
+                ") VALUES (?, ?, ?, ?, ?)";
         
         stmt = mConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
         stmt.setString(1, fName);
         stmt.setString(2, lName);
         stmt.setString(3, address);
         stmt.setString(4, phone);
+        stmt.setInt(5, doctorID);
         
         numRowsAffected = stmt.executeUpdate();
         if (numRowsAffected == 1) {
@@ -95,8 +98,9 @@ public class PatientTableGateway {
             lName = rs.getString(COLUMN_LNAME);
             address = rs.getString(COLUMN_ADDRESS);
             phone = rs.getString(COLUMN_PHONE);
+            doctorID = rs.getInt(COLUMN_DOCTORID);
             
-            p = new Patient(id, fName, lName, address, phone);
+            p = new Patient(id, fName, lName, address, phone, doctorID);
             patients.add(p);
         }
         
@@ -112,7 +116,8 @@ public class PatientTableGateway {
                 COLUMN_FNAME        + " =?, " +
                 COLUMN_LNAME        + " =?, " +
                 COLUMN_ADDRESS      + " =?, " +
-                COLUMN_PHONE        + " =?" +
+                COLUMN_PHONE        + " =?, " +
+                COLUMN_DOCTORID     + " =?" +
                 "WHERE " + COLUMN_PATIENTID + "=?";
         
         stmt = mConnection.prepareStatement(query);
@@ -120,7 +125,8 @@ public class PatientTableGateway {
         stmt.setString(2, p.getLName());
         stmt.setString(3, p.getAddress());
         stmt.setString(4, p.getPhone());
-        stmt.setInt(5, p.getPatientID());
+        stmt.setInt(5, p.getDoctorID());
+        stmt.setInt(6, p.getPatientID());
         
         numRowsAffected = stmt.executeUpdate();
         

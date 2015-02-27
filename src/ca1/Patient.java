@@ -6,13 +6,15 @@ public class Patient {
     private String lName;
     private String address;
     private String phone;
+    private int doctorID;
     
-    public Patient(int id, String fn, String ln, String a, String p) {
+    public Patient(int id, String fn, String ln, String a, String p, int d_id) {
         this.patientID = id;
         this.fName = fn;
         this.lName = ln;
         this.address = a;
         this.phone = p;
+        this.doctorID = d_id;
     }
     
     
@@ -49,6 +51,13 @@ public class Patient {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    
+    public int getDoctorID() {
+        return doctorID;
+    }
+    public void setDoctorID(int doctorID) {
+        this.doctorID = doctorID;
     }
     
     
