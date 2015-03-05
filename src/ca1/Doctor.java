@@ -1,6 +1,6 @@
 package ca1;
 public class Doctor {
-    private int doctorID;
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -8,7 +8,7 @@ public class Doctor {
     private int patientID;
     
     public Doctor(int id, String n, String p, String e, String ex, int p_id) {
-        this.doctorID = id;
+        this.id = id;
         this.name = n;
         this.phone = p;
         this.email = e;
@@ -17,10 +17,10 @@ public class Doctor {
     }
     
     public int getDoctorID() {
-        return doctorID;
+        return id;
     }
     public void setDoctorID(int doctorID) {
-        this.doctorID = doctorID;
+        this.id = doctorID;
     }
     
     public String getName() {

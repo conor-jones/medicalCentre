@@ -24,5 +24,33 @@ public class DoctorTableGateway {
         mConnection = connection;
     }
     
+    public List<Doctor> getDoctor() throws SQLException {
+        String query;
+        Statement stmt;
+        ResultSet rs;
+        List<Doctor> doctors;
+        
+        String name, phone, email, expertise;
+        int patientID;
+        
+        Doctor d;
+        
+        query = "SELECT * FROM " + TABLE_NAME;
+        stmt = this.mConnection.createStatement();
+        rs = stmt.executeQuery(query);
+        
+        doctors = new ArrayList<Doctor>();
+        while (rs.next()) {
+            doctorID = rs.getInt(COLUMN_DOCTORID);
+            name = rs.getString(COLUMN_NAME);
+            phone = rs.getString(COLUMN_PHONE);
+            email = rs.getString(COLUMN_EMAIL);
+            expertise = rs.getString(COLUMN_EXPERTISE);
+            patientID = rs.getInt(COLUMN_PATIENTID);
+            
+            d = new Doctor(id, name, phone, email, expertise)
+        }
+    }
+    
     
 }

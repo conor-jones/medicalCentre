@@ -1,7 +1,7 @@
 package ca1;
 public class Patient {
     
-    private int patientID;
+    private int id;
     private String fName;
     private String lName;
     private String address;
@@ -9,7 +9,7 @@ public class Patient {
     private int doctorID;
     
     public Patient(int id, String fn, String ln, String a, String p, int d_id) {
-        this.patientID = id;
+        this.id = id;
         this.fName = fn;
         this.lName = ln;
         this.address = a;
@@ -19,10 +19,10 @@ public class Patient {
     
     
     public int getPatientID() {
-        return patientID;
+        return id;
     }
     public void setPatientID(int patientID) {
-        this.patientID = patientID;
+        this.id = patientID;
     }
     
     public String getFName() {

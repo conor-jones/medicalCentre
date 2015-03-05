@@ -107,7 +107,7 @@ public class App {
     
     private static Patient readPatient(Scanner keyb) {
         String fName, lName, address, phone;
-        int patientId = 0;
+        int patientID, doctorID;
         String line;
         
         //line = getString(keyb, "Enter ID: ");
@@ -117,10 +117,10 @@ public class App {
         address = getString(keyb, "Enter address: ");
         phone = getString(keyb, "Enter phone number: ");
         
-        line = getString(keyb, "Enter Doctor ID: ");
+        line = getString(keyb, "Enter Doctor ID (enter -1 for no manager): ");
         doctorID = Integer.parseInt(line);
         
-        Patient p = new Patient(patientId, fName, lName, address, phone, doctorID);
+        Patient p = new Patient(patientID, fName, lName, address, phone, doctorID);
         
         return p;
     }

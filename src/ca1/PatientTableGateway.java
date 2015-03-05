@@ -18,7 +18,7 @@ public class PatientTableGateway {
     private static final String COLUMN_LNAME = "LName";
     private static final String COLUMN_ADDRESS = "Address";
     private static final String COLUMN_PHONE = "Phone";
-    private static final String COLUMN_DOCTORID = "DoctorID"
+    private static final String COLUMN_DOCTORID = "DoctorID";
     //private String patientId;
     
     public PatientTableGateway(Connection connection) {
@@ -26,7 +26,7 @@ public class PatientTableGateway {
     }
     
     
-    public int insertPatient(String fName, String lName, String address, String phone) 
+    public int insertPatient(String fName, String lName, String address, String phone, int doctorID) 
         throws SQLException {
         String query;
         PreparedStatement stmt;
@@ -81,7 +81,7 @@ public class PatientTableGateway {
         List<Patient> patients;
         
         String fName, lName, address, phone;
-        int id;
+        int id, doctorID;
         
         Patient p;
         
