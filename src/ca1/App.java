@@ -111,6 +111,9 @@ public class App {
                 System.out.println("Patient not deleted.");
             }
         }
+        else {
+            System.out.println("Patient not found");
+        }
     }
     
     private static void viewPatients(Model model) {
@@ -122,16 +125,16 @@ public class App {
         }
 
         else {
-            System.out.printf("%5s %20s %20s %15s %20s %5s\n", "ID", "First Name", "Last Name", "Address", "Phone", "Doctor ID" );
+            System.out.printf("%5s %20s %20s %15s %20s %5s\n", 
+                    "ID", "First Name", "Last Name", "Address", "Phone", "Doctor ID" );
             for(Patient pr : patients) {
                 System.out.printf("%5d %20s %20s %15s %20s %5d\n",
                         pr.getPatientID(),
                         pr.getFName(),
                         pr.getLName(),
-                        pr.getLName(),
                         pr.getAddress(),
-                        pr.getPhone());
-                        pr.getDoctorID();
+                        pr.getPhone(),
+                        pr.getDoctorID());
             }
         }
         System.out.println();
@@ -139,7 +142,7 @@ public class App {
     
     private static Patient readPatient(Scanner keyb) {
         String fName, lName, address, phone;
-        int id = 0, doctorID;
+        int id=0, doctorID;
         String line;
         
         //line = getString(keyb, "Enter ID: ");
@@ -254,16 +257,16 @@ public class App {
         }
 
         else {
-            System.out.printf("%5s %20s %20s %15s %20s \n", "ID", "Name", "Phone", "Email", "Expertise" );
+            System.out.printf("%5s %20s %20s %15s %20s \n", 
+                    "ID", "Name", "Phone", "Email", "Expertise" );
             for(Doctor d : doctors) {
-                System.out.printf("%5d %20s %20s %15s %20s \n",
+                System.out.printf("%5d %20s %20s %20s %20s \n",
                         d.getDoctorID(),
                         d.getName(),
                         d.getPhone(),
                         d.getEmail(),
                         d.getExpertise());
-                        //pr.getPhone());
-                        //pr.getDoctorID();
+                      
             }
         }
         System.out.println();
@@ -271,8 +274,8 @@ public class App {
     
     private static Doctor readDoctor(Scanner keyb) {
         String name, phone, email, expertise;
-        int doctorID;
-        //String line;
+        int doctorID = 0;
+        String line;
         
         //line = getString(keyb, "Enter ID: ");
         //doctorId = Integer.parseInt(line);

@@ -18,7 +18,6 @@ public class DoctorTableGateway {
     private static final String COLUMN_PHONE = "Phone";
     private static final String COLUMN_EMAIL = "Email";
     private static final String COLUMN_EXPERTISE = "Expertise";
-    private static final String COLUMN_PATIENTID = "Patient ID";
     
     public DoctorTableGateway(Connection connection) {
         mConnection = connection;
@@ -61,7 +60,7 @@ public class DoctorTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "DELETE FROM " + TABLE_NAME + "WHERE " + COLUMN_DOCTORID + " =?";
+        query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_DOCTORID + " =?";
         
         stmt = mConnection.prepareStatement(query);
         stmt.setInt(1, id);
@@ -71,7 +70,7 @@ public class DoctorTableGateway {
         return (numRowsAffected == 1);
     }
     
-    public List<Doctor> getDoctor() throws SQLException {
+    public List<Doctor> getDoctors() throws SQLException {
         String query;
         Statement stmt;
         ResultSet rs;
@@ -79,23 +78,19 @@ public class DoctorTableGateway {
         
         String name, phone, email, expertise;
         int doctorID;
-        
         Doctor d;
-        
         
         query = "SELECT * FROM " + TABLE_NAME;
         stmt = this.mConnection.createStatement();
         rs = stmt.executeQuery(query);
         
-        
         doctors = new ArrayList<Doctor>();
         while (rs.next()) {
-            doctorID = rs.getInt(COLUMN_DOCTORID);
+            doctorID = rs.getInt(COLUMN_DOCTORID);  
             name = rs.getString(COLUMN_NAME);
             phone = rs.getString(COLUMN_PHONE);
             email = rs.getString(COLUMN_EMAIL);
             expertise = rs.getString(COLUMN_EXPERTISE);
-            //doctorID = rs.getInt(COLUMN_DOCTORID);
             
             d = new Doctor(doctorID, name, phone, email, expertise);
             doctors.add(d);
@@ -109,7 +104,7 @@ public class DoctorTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "UPDATE " + TABLE_NAME + "SET " +
+        query = "UPDATE " + TABLE_NAME + " SET " +
                 COLUMN_NAME        + " =?, " +
                 COLUMN_PHONE        + " =?, " +
                 COLUMN_EMAIL      + " =?, " +

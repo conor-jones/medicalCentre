@@ -47,6 +47,7 @@ public class PatientTableGateway {
         stmt.setString(3, address);
         stmt.setString(4, phone);
         stmt.setInt(5, doctorID);
+       
         
         numRowsAffected = stmt.executeUpdate();
         if (numRowsAffected == 1) {
@@ -64,7 +65,7 @@ public class PatientTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "DELETE FROM " + TABLE_NAME + "WHERE " + COLUMN_PATIENTID + " =?";
+        query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_PATIENTID + " = ?";
         
         stmt = mConnection.prepareStatement(query);
         stmt.setInt(1, id);
@@ -99,6 +100,9 @@ public class PatientTableGateway {
             address = rs.getString(COLUMN_ADDRESS);
             phone = rs.getString(COLUMN_PHONE);
             doctorID = rs.getInt(COLUMN_DOCTORID);
+            if (rs.wasNull()) {
+                doctorID = -1;
+            }
             
             p = new Patient(id, fName, lName, address, phone, doctorID);
             patients.add(p);
@@ -112,13 +116,13 @@ public class PatientTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "UPDATE " + TABLE_NAME + "SET " +
+        query = "UPDATE " + TABLE_NAME + " SET " +
                 COLUMN_FNAME        + " =?, " +
                 COLUMN_LNAME        + " =?, " +
                 COLUMN_ADDRESS      + " =?, " +
                 COLUMN_PHONE        + " =?, " +
                 COLUMN_DOCTORID     + " =?" +
-                "WHERE " + COLUMN_PATIENTID + "=?";
+                " WHERE " + COLUMN_PATIENTID + " =?";
         
         stmt = mConnection.prepareStatement(query);
         stmt.setString(1, p.getFName());

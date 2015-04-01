@@ -5,15 +5,14 @@ public class Doctor {
     private String phone;
     private String email;
     private String expertise;
-    private int patientID;
+   
     
-    public Doctor(int id, String n, String p, String e, String ex, int p_id) {
+    public Doctor(int id, String n, String p, String e, String ex) {
         this.id = id;
         this.name = n;
         this.phone = p;
         this.email = e;
         this.expertise = ex;
-        this.patientID = p_id;
     }
     
     public int getDoctorID() {
@@ -49,13 +48,6 @@ public class Doctor {
     }
     public void setExpertise(String expertise) {
         this.expertise = expertise;
-    }
-    
-    public int getPatientID() {
-        return patientID;
-    }
-    public void setPatientID(int patientID) {
-        this.patientID = patientID;
     }
     
     
