@@ -2,6 +2,7 @@ package ca1;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +75,16 @@ public class Model {
     
     public List<Patient> getPatients() {
         return this.patients;
+    }
+    
+    public List<Patient> getPatientsByDoctorId() {
+        List<Patient> list = new ArrayList<Patient>();
+        for (Patient p : this.patients) {
+            if(p.getDoctorID() == doctorID) {
+                list.add(p);
+            }
+        }
+        return list;
     }
     
     Patient findPatientById(int id) {
