@@ -7,87 +7,94 @@ public class App {
     public static void main (String[] args) {
         Scanner keyboard = new Scanner(System.in);
         
-        Model model = Model.getInstance();
-        int opt;
+        Model model;
+        int opt = 9;
         //this is the menu
         do {
-            System.out.println("1. Create new Patients");
-            System.out.println("2. Delete existing Patient");
-            System.out.println("3. Edit a Patient");
-            System.out.println("4. View all Patients");
-            System.out.println();
-            System.out.println("5. Create new Doctors");
-            System.out.println("6. Delete existing Doctors");
-            System.out.println("7. Edit a Doctors");
-            System.out.println("8. View all Doctors");
-            System.out.println();
-            System.out.println("9. Exit");
+            try {
+                model = Model.getInstance();
+                System.out.println("1. Create new Patients");
+                System.out.println("2. Delete existing Patient");
+                System.out.println("3. Edit a Patient");
+                System.out.println("4. View all Patients");
+                System.out.println();
+                System.out.println("5. Create new Doctors");
+                System.out.println("6. Delete existing Doctors");
+                System.out.println("7. Edit a Doctors");
+                System.out.println("8. View all Doctors");
+                System.out.println();
+                System.out.println("9. Exit");
 
 
-            System.out.println("Enter option: ");
-            String line = keyboard.nextLine();
-            opt = Integer.parseInt(line);
 
-            System.out.println("You chose option " + opt);
-            switch (opt){
-                case 1: {
-                    System.out.println("Creating Patient");
-                    createPatient (keyboard, model);
-                    break;
-                }
-                
-                case 2: {
-                    System.out.println("Deleting Patient");
-                    deletePatient(keyboard, model);
-                    break;
-                }
-                
-                case 3: {
-                    System.out.println("Editing Patients");
-                     editPatient(keyboard, model);
-                    break;
-                }
-                
-                case 4: {
-                    System.out.println("Viewing Patients");
-                    viewPatients(model);
-                    break;
-                }
-                
-                case 5: {
-                    System.out.println("Creating Doctor");
-                    createDoctor (keyboard, model);
-                    break;
-                }
-                
-                case 6: {
-                    System.out.println("Deleting Doctor");
-                    deleteDoctor(keyboard, model);
-                    break;
-                }
-                
-                case 7: {
-                    System.out.println("Editing Doctors");
-                     editDoctor(keyboard, model);
-                    break;
-                }
-                
-                case 8: {
-                    System.out.println("Viewing Doctors");
-                    viewDoctors(model);
-                    break;
-                }
-                
-                
-            }    
-        }
+                opt = getInt(keyboard, "Enter option: " ,9);
+
+                System.out.println("You chose option " + opt);
+                switch (opt){
+                    case 1: {
+                        System.out.println("Creating Patient");
+                        createPatient (keyboard, model);
+                        break;
+                    }
+
+                    case 2: {
+                        System.out.println("Deleting Patient");
+                        deletePatient(keyboard, model);
+                        break;
+                    }
+
+                    case 3: {
+                        System.out.println("Editing Patients");
+                         editPatient(keyboard, model);
+                        break;
+                    }
+
+                    case 4: {
+                        System.out.println("Viewing Patients");
+                        viewPatients(model);
+                        break;
+                    }
+
+                    case 5: {
+                        System.out.println("Creating Doctor");
+                        createDoctor (keyboard, model);
+                        break;
+                    }
+
+                    case 6: {
+                        System.out.println("Deleting Doctor");
+                        deleteDoctor(keyboard, model);
+                        break;
+                    }
+
+                    case 7: {
+                        System.out.println("Editing Doctors");
+                         editDoctor(keyboard, model);
+                        break;
+                    }
+
+                    case 8: {
+                        System.out.println("Viewing Doctors");
+                        viewDoctors(model);
+                        break;
+                    }
+
+
+                }    
+            }
         
+            catch (DataAccessException e) { 
+                System.out.println();
+                System.out.println(e.getMessage());
+                System.out.println();
+            }
+        }
         while (opt!=9);
     }
     //create patient method
-    private static void createPatient(Scanner keyboard, Model model) {
+    private static void createPatient(Scanner keyboard, Model model) throws DataAccessException {
        Patient p = readPatient(keyboard);
-        model.addPatient(p);
+        //model.addPatient(p);
         if (model.addPatient(p)) {
             System.out.println("Patient added to database.");
         }
@@ -97,9 +104,8 @@ public class App {
         System.out.println(); 
     }
     
-    private static void deletePatient(Scanner keyboard, Model model) {
-        System.out.println("Enter the ID of the patient you want to delete:");
-        int patientId = Integer.parseInt(keyboard.nextLine());
+    private static void deletePatient(Scanner keyboard, Model model) throws DataAccessException {
+        int patientId = getInt(keyboard, "Enter the ID of the patient you want to delete:" ,-1);
         Patient p;
 
         p = model.findPatientById(patientId);
@@ -129,7 +135,7 @@ public class App {
                     "ID", "First Name", "Last Name", "Address", "Phone", "Doctor ID" );
             for(Patient pr : patients) {
                 System.out.printf("%5d %20s %20s %15s %20s %5d\n",
-                        pr.getPatientID(),
+                        pr.getPatientID(), 
                         pr.getFName(),
                         pr.getLName(),
                         pr.getAddress(),
@@ -152,8 +158,7 @@ public class App {
         address = getString(keyb, "Enter address: ");
         phone = getString(keyb, "Enter phone number: ");
         
-        line = getString(keyb, "Enter Doctor ID (enter -1 for no manager): ");
-        doctorID = Integer.parseInt(line);
+        doctorID = getInt(keyb, "Enter Doctor ID (enter -1 for no manager): " ,-1);
         
         Patient p = new Patient(id, fName, lName, address, phone, doctorID);
         
@@ -166,9 +171,8 @@ public class App {
     }
 
 
-    private static void editPatient(Scanner keyboard, Model model) {
-        System.out.println("Enter the ID of the patient you want to edit:");
-        int patientId = Integer.parseInt(keyboard.nextLine());
+    private static void editPatient(Scanner keyboard, Model model) throws DataAccessException {
+        int patientId = getInt(keyboard, "Enter the ID of the patient you want to edit:" ,-1);
         Patient p;
         
         p = model.findPatientById(patientId);
@@ -189,13 +193,12 @@ public class App {
     private static void editPatientDetails(Scanner keyboard, Patient p) {
         String fName, lName, address, phone;
         int doctorID;
-        String line;
         
         fName = getString(keyboard, "Enter First name [" + p.getFName() + "]: ");
         lName = getString(keyboard, "Enter Last name [" + p.getLName() + "]: ");
         address = getString(keyboard, "Enter Address [" + p.getAddress() + "]: ");
         phone = getString(keyboard, "Enter Phone number [" + p.getPhone() + "]: ");
-        line = getString(keyboard, "Enter Doctor ID [" + p.getDoctorID() + "]: ");
+        doctorID = getInt(keyboard, "Enter Doctor ID [" + p.getDoctorID() + "]: " ,-1);
         
         
         if(fName.length() !=0) {
@@ -214,13 +217,12 @@ public class App {
             p.setPhone(phone);
         }
         
-        if(line.length() !=0) {
-            doctorID = Integer.parseInt(line);
+        if(doctorID != p.getDoctorID()) {
             p.setDoctorID(doctorID);
         }
     }
     
-    private static void createDoctor(Scanner keyboard, Model model) {
+    private static void createDoctor(Scanner keyboard, Model model) throws DataAccessException {
        Doctor d = readDoctor(keyboard);
         model.addDoctor(d);
         if (model.addDoctor(d)) {
@@ -232,14 +234,13 @@ public class App {
         System.out.println(); 
     }
     
-    private static void deleteDoctor(Scanner keyboard, Model model) {
-        System.out.println("Enter the ID of the doctor you want to delete:");
-        int doctorId = Integer.parseInt(keyboard.nextLine());
-        Doctor p;
+    private static void deleteDoctor(Scanner keyboard, Model model) throws DataAccessException {
+        int doctorId = getInt(keyboard, "Enter the ID of the doctor you want to delete:" ,-1);
+        Doctor d;
 
-        p = model.findDoctorById(doctorId);
-        if (p != null) {
-            if(model.removeDoctor(p)) {
+        d = model.findDoctorById(doctorId);
+        if (d != null) {
+            if(model.removeDoctor(d)) {
                 System.out.println("Doctor deleted");
             }
             else {
@@ -274,7 +275,7 @@ public class App {
     
     private static Doctor readDoctor(Scanner keyb) {
         String name, phone, email, expertise;
-        int doctorID = 0;
+        int doctorID=0;
         String line;
         
         //line = getString(keyb, "Enter ID: ");
@@ -298,9 +299,8 @@ public class App {
     //}
 
 
-    private static void editDoctor(Scanner keyboard, Model model) {
-        System.out.println("Enter the ID of the doctor you want to edit:");
-        int doctorId = Integer.parseInt(keyboard.nextLine());
+    private static void editDoctor(Scanner keyboard, Model model) throws DataAccessException {
+        int doctorId = getInt(keyboard, "Enter the ID of the doctor you want to edit:" ,-1);
         Doctor d;
         
         d = model.findDoctorById(doctorId);
@@ -318,32 +318,32 @@ public class App {
         }
     }
 
-    private static void editDoctorDetails(Scanner keyboard, Doctor p) {
+    private static void editDoctorDetails(Scanner keyboard, Doctor d) {
         String name, phone, email, expertise;
         int doctorID;
         String line;
         
-        name = getString(keyboard, "Enter Name [" + p.getName() + "]: ");
-        phone = getString(keyboard, "Enter Phone [" + p.getPhone() + "]: ");
-        email = getString(keyboard, "Enter Email [" + p.getEmail() + "]: ");
-        expertise = getString(keyboard, "Enter area of Expertise [" + p.getExpertise() + "]: ");
+        name = getString(keyboard, "Enter Name [" + d.getName() + "]: ");
+        phone = getString(keyboard, "Enter Phone [" + d.getPhone() + "]: ");
+        email = getString(keyboard, "Enter Email [" + d.getEmail() + "]: ");
+        expertise = getString(keyboard, "Enter area of Expertise [" + d.getExpertise() + "]: ");
         //line = getString(keyboard, "Enter Doctor ID [" + p.getDoctorID() + "]: ");
         
         
         if(name.length() !=0) {
-            p.setName(name);
+            d.setName(name);
         }
         
         if(phone.length() !=0) {
-            p.setPhone(phone);
+            d.setPhone(phone);
         }
         
         if(email.length() !=0) {
-            p.setEmail(email);
+            d.setEmail(email);
         }
         
         if(expertise.length() !=0) {
-            p.setExpertise(expertise);
+            d.setExpertise(expertise);
         }
         
         //if(line.length() !=0) {
@@ -352,7 +352,26 @@ public class App {
         //}
     }
     
-    
+    private static int getInt(Scanner keyboard, String prompt, int defaultValue) {
+        int opt = defaultValue;
+        boolean finished = false;
+        do {
+            try {
+                System.out.print(prompt);
+                String line = keyboard.nextLine();
+                if (line.length() > 0) {
+                    opt = Integer.parseInt(line);
+                }
+                opt = Integer.parseInt(line);
+                finished = true;
+            }
+            catch(NumberFormatException e) {
+                System.out.println("Exception: " + e.getMessage());
+            }
+        }
+        while (!finished);
+        return opt;
+    }
     
     
 }

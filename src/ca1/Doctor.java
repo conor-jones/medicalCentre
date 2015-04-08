@@ -15,6 +15,10 @@ public class Doctor {
         this.expertise = ex;
     }
     
+    public Doctor(String n, String p, String e, String ex) {
+        this(-1, n, p, e, ex);
+    }
+    
     public int getDoctorID() {
         return id;
     }

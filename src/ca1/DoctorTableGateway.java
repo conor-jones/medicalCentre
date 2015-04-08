@@ -31,9 +31,9 @@ public class DoctorTableGateway {
         int id = -1;
         
         query = "INSERT INTO " + TABLE_NAME + " (" +
-                COLUMN_NAME + "," +
-                COLUMN_PHONE + "," +
-                COLUMN_EMAIL + "," +
+                COLUMN_NAME + ", " +
+                COLUMN_PHONE + ", " +
+                COLUMN_EMAIL + ", " +
                 COLUMN_EXPERTISE + 
                 ") VALUES (?, ?, ?, ?)";
         
@@ -60,7 +60,7 @@ public class DoctorTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_DOCTORID + " =?";
+        query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_DOCTORID + " = ?";
         
         stmt = mConnection.prepareStatement(query);
         stmt.setInt(1, id);
@@ -110,7 +110,7 @@ public class DoctorTableGateway {
                 COLUMN_EMAIL      + " =?, " +
                 COLUMN_EXPERTISE        + " =? " +
                 //COLUMN_DOCTORID     + " =?" +
-                "WHERE " + COLUMN_DOCTORID + "=?";
+                " WHERE " + COLUMN_DOCTORID + " =?";
         
         stmt = mConnection.prepareStatement(query);
         stmt.setString(1, d.getName());

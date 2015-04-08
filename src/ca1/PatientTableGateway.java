@@ -116,7 +116,7 @@ public class PatientTableGateway {
         PreparedStatement stmt;
         int numRowsAffected;
         
-        query = "UPDATE " + TABLE_NAME + " SET " +
+        query = "UPDATE" + TABLE_NAME + "SET " +
                 COLUMN_FNAME        + " =?, " +
                 COLUMN_LNAME        + " =?, " +
                 COLUMN_ADDRESS      + " =?, " +

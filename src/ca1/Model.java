@@ -10,37 +10,37 @@ public class Model {
     
     private static Model instance = null;
     
-    public static Model getInstance() {
+    public static Model getInstance() throws DataAccessException {
         if (instance == null) {
             instance = new Model();
         }
         return instance; 
     }
-    Connection conn =null;
+    //Connection conn =null;
     List<Patient> patients;
     PatientTableGateway gateway;
     
     List<Doctor> doctors;
     DoctorTableGateway d_gateway;
     
-    private Model () {
+    private Model () throws DataAccessException {
         try {
-            conn = DBConnection.getInstance();
+            Connection conn = DBConnection.getInstance();
             this.gateway = new PatientTableGateway(conn);
             
             this.patients = this.gateway.getPatient();
         } 
         
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception intialisation Model object: " + ex.getMessage());
         } 
         
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception intialisation Model object: " + ex.getMessage());
         } 
         }
     
-    public boolean addPatient(Patient p) {
+    public boolean addPatient(Patient p) throws DataAccessException {
         boolean result = false;
         try {
             int id = this.gateway.insertPatient(p.getFName(), p.getLName(), p.getAddress(), p.getPhone(), p.getDoctorID());
@@ -51,12 +51,12 @@ public class Model {
              }       
         } 
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception adding patient: " + ex.getMessage());
         }
         return result;
     }
     
-    public boolean removePatient(Patient p) {
+    public boolean removePatient(Patient p) throws DataAccessException {
         boolean removed = false;
         
         try {
@@ -66,7 +66,7 @@ public class Model {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception removing patient: " + ex.getMessage());
         }
         return removed;
     }
@@ -95,7 +95,7 @@ public class Model {
         return p;
     }
 
-    boolean updatePatient(Patient p) {
+    boolean updatePatient(Patient p) throws DataAccessException {
         boolean updated = false;
         
         try {
@@ -103,12 +103,12 @@ public class Model {
             
         }
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception updating patient: " + ex.getMessage());
         }
         return updated;
     }
     
-    public boolean addDoctor(Doctor d) {
+    public boolean addDoctor(Doctor d) throws DataAccessException {
         boolean result = false;
         try {
             int id = this.d_gateway.insertDoctor(d.getName(), d.getPhone(), d.getEmail(), d.getExpertise());
@@ -119,12 +119,12 @@ public class Model {
              }       
         } 
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception adding doctor: " + ex.getMessage());
         }
         return result;
     }
     
-    public boolean removeDoctor(Doctor d) {
+    public boolean removeDoctor(Doctor d) throws DataAccessException {
         boolean removed = false;
         
         try {
@@ -134,7 +134,7 @@ public class Model {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception removing doctor: " + ex.getMessage());
         }
         return removed;
     }
@@ -163,7 +163,7 @@ public class Model {
         return p;
     }
 
-    boolean updateDoctor(Doctor d) {
+    boolean updateDoctor(Doctor d) throws DataAccessException {
         boolean updated = false;
         
         try {
@@ -171,7 +171,7 @@ public class Model {
             
         }
         catch (SQLException ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Exception updating doctor: " + ex.getMessage());
         }
         return updated;
     }
